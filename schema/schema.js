@@ -5,6 +5,7 @@ const {
 	GraphQLID, 
 	GraphQLString, 
     GraphQLInt,
+    GraphQLList,
 	GraphQLSchema
 } = require('graphql');
 
@@ -31,6 +32,12 @@ const RootQuery = new GraphQLObjectType({
 			resolve(parent, args) { // here is where we want to return our data -> later here mongoose to get data from the database
 				return companies.find(company => company.id === args.id);
 		    }
+        },
+        companies: {
+            type: new GraphQLList(CompanyType),
+            resolve(parent, args) {
+                return companies;
+            }
         }
 	}
 });
